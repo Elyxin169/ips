@@ -1,4 +1,4 @@
-ip = "192.168.22.26/20"
+ip = "192.168.13.44/27"
 # network = ...[x AND y]
 #hostMin, hostmax = lowest ip possible, ...
 
@@ -25,9 +25,11 @@ mask = mask[2:]
 #print(mask)
 
 q = [int(sA[i]) & int("0b" + mask.split('.')[i], 2) for i in range(4)]
-print("maszk: ", *[str(int("0b" + v, 2))+'.' for v in mask.split('.')], sep='')
-print("network: ", end="")
-print(*q, sep=".")
+print("maszk: ", *[str(int("0b" + v, 2))+'.' for v in mask.split('.')], sep='', end="")
+print(",   ", mask)
+networkasd = ".".join([str(v) for v in q])
+print("network: ", networkasd, end=",    ")
+print('.'.join([bin(int(x)+256)[3:] for x in networkasd.split('.')]))
 mi = ""
 
 bbbbbbb = ''.join(bA)
@@ -40,7 +42,8 @@ for v in range(32):
 mi = mi[:-1] + '1'
 miA = [mi[i:i+8] for i in range(0, len(mi), 8)]
 print("hostMin: ", end="")
-print(*[int("0b" + v, 2) for v in miA], sep=".")
+print(*[int("0b" + v, 2) for v in miA], sep=".", end=",     ")
+print(".".join(miA))
 
 ma = ""
 for v in range(32):
@@ -51,7 +54,8 @@ for v in range(32):
 ma = ma[:-1] + '0'
 maA = [ma[i:i+8] for i in range(0, len(ma), 8)]
 print("hostMax: ", end="")
-print(*[int("0b" + v, 2) for v in maA], sep=".")
+print(*[int("0b" + v, 2) for v in maA], sep=".", end=",     ")
+print(".".join(maA))
 
 broadcast = ""
 for v in range(32):
@@ -61,4 +65,5 @@ for v in range(32):
         broadcast += '1'
 broadcastA = [broadcast[i:i+8] for i in range(0, len(broadcast), 8)]
 print("broadcast: ", end="")
-print(*[int("0b" + v, 2) for v in broadcastA], sep=".")
+print(*[int("0b" + v, 2) for v in broadcastA], sep=".", end=",   ")
+print(".".join(broadcastA))
